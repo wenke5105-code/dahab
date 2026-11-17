@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAHAB KEBAB | Та самая шаурма в Григориополе</title>
+
+    <style>
+        :root {
+            --primary: #D32F2F;
+            --secondary: #FF9800;
+            --bg-color: #FFF8E1;
+            --text-color: #1A1A1A;
+            --card-bg: #FFFFFF;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #E0E0E0;
+            --menu-alt-bg: #F5F5F5;
+            --item-hover-bg: #FFF3D6;
+            --muted: #888888;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #E0E0E0;
+            --card-bg: #1E1E1E;
+            --header-bg: rgba(30, 30, 30, 0.95);
+            --border-color: #333333;
+            --menu-alt-bg: #1A1A1A;
+            --item-hover-bg: #2A2A2A;
+            --muted: #AAAAAA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .logo, .btn, .item-price {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--secondary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .theme-btn {
+            background: none;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+        }
+
+        .theme-btn:hover {
+            border-color: var(--secondary);
+            background-color: var(--card-bg);
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1529006557810-274b9b2fc783?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: #1A1A1A;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        .menu-section {
+            background-color: var(--menu-alt-bg);
+            max-width: 100%;
+        }
+
+        .menu-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .menu-category {
+            margin-bottom: 3rem;
+        }
+
+        .menu-category h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.2rem 1rem;
+            border-bottom: 1px dashed var(--border-color);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            background-color: var(--item-hover-bg);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .menu-item:hover .item-name {
+            color: var(--primary);
+        }
+
+        .menu-item::after {
+            content: '👆 Подробнее';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            color: var(--secondary);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-style: italic;
+        }
+
+        .menu-item:hover::after {
+            opacity: 1;
+        }
+
+        .item-info {
+            flex: 1;
+            padding-right: 1rem;
+        }
+
+        .item-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.3rem;
+            transition: color 0.3s;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .item-price {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 20px 20px 0 0;
+            background: linear-gradient(135deg, #333, #111);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-desc {
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .modal-price {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-extras {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-extras h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .modal-extras ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-extras li {
+            padding: 0.3rem 0;
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .modal-btn {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .location-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--primary);
+            text-align: center;
+        }
+
+        .location-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .location-card p {
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .location-card .phone {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            display: block;
+            margin: 1rem 0;
+        }
+
+        .hours {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        .instagram-section {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            text-align: center;
+            max-width: 100%;
+            padding: 4rem 2rem;
+        }
+
+        .instagram-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .insta-btn {
+            background: white;
+            color: #dc2743;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .insta-btn:hover { transform: scale(1.05); }
+
+        footer {
+            background-color: var(--card-bg);
+            color: var(--muted);
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .btn-outline { margin-left: 0; margin-top: 1rem; display: block; }
+            .menu-item { flex-direction: column; gap: 0.5rem; }
+            .item-price { align-self: flex-end; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">DAHAB <span>KEBAB</span></a>
+            <ul class="nav-links">
+                <li><a href="#menu">Меню</a></li>
+                <li><a href="#locations">Адреса</a></li>
+                <li><a href="https://www.instagram.com/dahab.kebab/" target="_blank">Instagram</a></li>
+                <li><button id="theme-toggle" class="theme-btn" aria-label="Переключить тему">🌙</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Та самая шаурма</h1>
+            <p>ШАУРМА • БУРГЕРЫ • ХОТ-ДОГИ • ДЕСЕРТЫ</p>
+            <div>
+                <a href="#locations" class="btn">Заказать сейчас</a>
+                <a href="#menu" class="btn btn-outline">Смотреть меню</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+        <h2 class="section-title">Наше Меню</h2>
+        <div class="menu-container" id="menu-container"></div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem;">* Нажмите на любую позицию, чтобы узнать подробности</p>
+            <a href="https://www.instagram.com/dahab.kebab/" target="_blank" class="btn">Полное меню в Instagram</a>
+        </div>
+    </section>
+
+    <section id="locations">
+        <h2 class="section-title">Где нас найти</h2>
+        <div class="locations-grid">
+            <div class="location-card">
+                <h3>📍 Григориополь (Центр)</h3>
+                <p>ул. Карла Маркса, 185Б</p>
+                <p style="font-size: 0.9rem; color: var(--muted);">(ТК "Старый рынок", вход сзади)</p>
+                <a href="tel:+37377858303" class="phone">📞 0778 58 303</a>
+                <p style="font-size: 0.9rem;">(для предзаказа)</p>
+                <div class="hours">🕒 Ежедневно: 8:30 – 00:00</div>
+            </div>
+            <div class="location-card">
+                <h3>📍 Дороцкое (Трасса)</h3>
+                <p>Пост таможни, Дороцкое</p>
+                <p style="font-size: 0.9rem; color: var(--muted);">(удобная остановка в пути)</p>
+                <a href="tel:+37377500027" class="phone">📞 0775 00 027</a>
+                <p style="font-size: 0.9rem;">(для предзаказа)</p>
+                <div class="hours">🕒 Ежедневно: 8:00 – 22:00</div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2.5rem;">
+            <a href="https://www.maps.app.goo.gl/VhmvTLnp6fMWgo889" target="_blank" class="btn">Открыть на Google Maps</a>
+        </div>
+    </section>
+
+    <section class="instagram-section">
+        <h2>Следите за нами в Instagram</h2>
+        <p>Новинки меню, десерты, акции и живая атмосфера @dahab.kebab</p>
+        <a href="https://www.instagram.com/dahab.kebab/" target="_blank" class="insta-btn">📷 Подписаться (@dahab.kebab)</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 DAHAB KEBAB. Все права защищены.</p>
+        <p>ШАУРМА • БУРГЕРЫ • ХОТ-ДОГИ • ДЕСЕРТЫ | ГРИГОРИОПОЛЬ</p>
+    </footer>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">✕</button>
+            <div class="modal-image" id="modal-image"></div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <p class="modal-desc" id="modal-desc"></p>
+                <div class="modal-price" id="modal-price"></div>
+                <div class="modal-extras" id="modal-extras" style="display:none;">
+                    <h4>Доступные добавки:</h4>
+                    <ul id="modal-extras-list"></ul>
+                </div>
+                <a href="tel:+37377858303" class="btn modal-btn">📞 Заказать по телефону</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === ДАННЫЕ МЕНЮ ===
+        const menuData = [
+            {
+                category: "🌯 Шаурма",
+                items: [
+                    {
+                        name: "Классическая",
+                        price: 55,
+                        desc: "Сочная курица, свежие овощи, фирменный чесночный соус, хрустящий лаваш",
+                        image: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600",
+                        extras: [
+                            { name: "+ добавка мяса", price: 10 },
+                            { name: "+ сыр", price: 7 },
+                            { name: "+ фри", price: 7 }
+                        ]
+                    },
+                    {
+                        name: "Традиционная",
+                        price: 65,
+                        desc: "Классический рецепт с обжаренным мясом на вертеле, свежими овощами и фирменными соусами",
+                        image: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600",
+                        extras: [
+                            { name: "+ добавка мяса", price: 10 },
+                            { name: "+ сыр", price: 7 },
+                            { name: "+ фри", price: 7 }
+                        ]
+                    },
+                    {
+                        name: "Сырная",
+                        price: 65,
+                        desc: "Курица, двойной сыр, моцарелла, овощи, сырный соус — для настоящих любителей сыра",
+                        image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600",
+                        extras: [
+                            { name: "+ добавка мяса", price: 10 },
+                            { name: "+ фри", price: 7 }
+                        ]
+                    },
+                    {
+                        name: "Острая",
+                        price: 60,
+                        desc: "Для любителей огня: курица, халапеньо, острый соус чили, лук, свежие овощи",
+                        image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600",
+                        extras: [
+                            { name: "+ добавка мяса", price: 10 },
+                            { name: "+ сыр", price: 7 },
+                            { name: "+ фри", price: 7 }
+                        ]
+                    },
+                    {
+                        name: "На тарелке",
+                        price: 70,
+                        desc: "Шаурма без лаваша — мясо, овощи, соус и гарнир на тарелке. Идеально для полноценного обеда",
+                        image: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600",
+                        extras: [
+                            { name: "+ добавка мяса", price: 10 },
+                            { name: "+ сыр", price: 7 }
+                        ]
+                    }
+                ]
+            },
+            {
+                category: "🍔 Фастфуд",
+                items: [
+                    {
+                        name: "Бургер",
+                        price: 45,
+                        desc: "Сочная котлета из говядины, свежие овощи, фирменный соус, мягкая булочка",
+                        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
+                        extras: [
+                            { name: "+ добавка мяса", price: 10 },
+                            { name: "+ сыр", price: 7 }
+                        ]
+                    },
+                    {
+                        name: "Хот-дог в лаваше",
+                        price: 55,
+                        desc: "Сосиска в мягком лаваше с овощами и соусами — сытный и удобный формат",
+                        image: "https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=600",
+                        extras: [
+                            { name: "+ добавка мяса", price: 10 }
+                        ]
+                    },
+                    {
+                        name: "Хот-дог",
+                        price: 40,
+                        desc: "Классический хот-дог с сосиской, горчицей, кетчупом и хрустящим луком",
+                        image: "https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=600",
+                        extras: []
+                    },
+                    {
+                        name: "Картофель фри",
+                        price: 35,
+                        desc: "Золотистый, хрустящий картофель с солью — идеальное дополнение к любому блюду",
+                        image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600",
+                        extras: [
+                            { name: "+ сырный соус", price: 5 }
+                        ]
+                    }
+                ]
+            },
+            {
+                category: "🧁 Десерты",
+                items: [
+                    {
+                        name: "Красный Бархат",
+                        price: 55,
+                        desc: "Идеальный баланс сладости и лёгкой ягодной кислинки — нежный, свежий и по-настоящему изысканный десерт. Ароматный, бархатистый бисквит Red Velvet в сочетании с лёгким кремом на основе творожного сыра и ярким малиновым конфи.",
+                        image: "https://images.unsplash.com/photo-1586788680434-30d32443d465?w=600",
+                        extras: []
+                    },
+                    {
+                        name: "Сникерс",
+                        price: 55,
+                        desc: "Насыщенный, тягучий, с ярким карамельно-ореховым акцентом — для тех, кто любит богатый вкус и сладкое удовольствие без компромиссов. Сочный шоколадный бисквит, сливочный крем на основе творожного сыра, густая сливочная карамель и хрустящий арахис.",
+                        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600",
+                        extras: []
+                    },
+                    {
+                        name: "Эклеры с фисташкой и малиной",
+                        price: 50,
+                        desc: "Воздушное заварное тесто, нежная фисташковая начинка и яркий малиновый крем — изысканное сочетание с ореховой глубиной и лёгкой ягодной кислинкой.",
+                        image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=600",
+                        extras: []
+                    },
+                    {
+                        name: "Трайфл Орео",
+                        price: 50,
+                        desc: "Глубокий шоколадный вкус, сливочная текстура и любимая классика — десерт, от которого невозможно оторваться. Нежные слои насыщенного шоколадного бисквита чередуются с воздушным кремом на основе творожного сыра, дополненным измельчёнными печеньками Oreo.",
+                        image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600",
+                        extras: []
+                    }
+                ]
+            },
+            {
+                category: "🥤 Прохладительные напитки",
+                items: [
+                    { name: "Мохито лайм", price: 25, desc: "Освежающий лимонад с лаймом, мятой и газированной водой", image: "https://images.unsplash.com/photo-1551539186-7e548f2a8c79?w=600", extras: [] },
+                    { name: "Мохито клубничный", price: 30, desc: "Клубничный лимонад с мятой — сладкий и освежающий", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600", extras: [] },
+                    { name: "Голубая лагуна", price: 30, desc: "Яркий синий лимонад с цитрусовым вкусом", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600", extras: [] },
+                    { name: "Шмель", price: 30, desc: "Фирменный лимонад с медово-имбирным вкусом", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600", extras: [] },
+                    { name: "Гренадин", price: 30, desc: "Сладкий гранатовый лимонад красивого красного цвета", image: "https://images.unsplash.com/photo-1551539186-7e548f2a8c79?w=600", extras: [] },
+                    { name: "Молочно-клубничный", price: 30, desc: "Нежный молочный коктейль со свежей клубникой", image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", extras: [] },
+                    { name: "Молочно-шоколадный", price: 30, desc: "Густой молочный коктейль с насыщенным шоколадным вкусом", image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", extras: [] },
+                    { name: "Молочно-банановый", price: 30, desc: "Классический молочный коктейль со спелым бананом", image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", extras: [] },
+                    { name: "Айс-латте", price: 20, desc: "Холодный кофе с молоком и льдом — идеален в жаркий день", image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600", extras: [] },
+                    { name: "Фруктовый", price: 25, desc: "Натуральный фруктовый лимонад", image: "https://images.unsplash.com/photo-1551539186-7e548f2a8c79?w=600", extras: [] }
+                ]
+            },
+            {
+                category: "☕ Горячие напитки",
+                items: [
+                    { name: "Горячий чай", price: 10, desc: "Классический чёрный или зелёный чай", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600", extras: [] },
+                    { name: "Эспрессо", price: 10, desc: "Крепкий итальянский кофе", image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600", extras: [] },
+                    { name: "Американо", price: 10, desc: "Эспрессо с горячей водой — мягкий и ароматный", image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600", extras: [] },
+                    { name: "Капучино", price: 17, desc: "Эспрессо с воздушной молочной пенкой", image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600", extras: [] },
+                    { name: "Латте", price: 19, desc: "Мягкий кофе с большим количеством молока", image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600", extras: [] }
+                ]
+            },
+            {
+                category: "🥣 Соусы и добавки",
+                items: [
+                    { name: "Кетчуп", price: 5, desc: "Классический томатный соус", image: "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=600", extras: [] },
+                    { name: "Сырный соус", price: 5, desc: "Нежный сливочный соус с сыром", image: "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=600", extras: [] },
+                    { name: "Сливочно-чесночный", price: 5, desc: "Пикантный соус с чесноком и сливками", image: "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=600", extras: [] },
+                    { name: "+ добавка мяса", price: 10, desc: "Дополнительная порция сочного мяса в любое блюдо", image: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600", extras: [] }
+                ]
+            }
+        ];
+
+        // === РЕНДЕР МЕНЮ ===
+        const menuContainer = document.getElementById('menu-container');
+        
+        menuData.forEach((category, catIndex) => {
+            const catDiv = document.createElement('div');
+            catDiv.className = 'menu-category';
+            catDiv.innerHTML = `<h3>${category.category}</h3>`;
+            
+            category.items.forEach((item, itemIndex) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'menu-item';
+                itemDiv.innerHTML = `
+                    <div class="item-info">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-desc">${item.desc}</span>
+                    </div>
+                    <span class="item-price">${item.price} лей</span>
+                `;
+                itemDiv.addEventListener('click', () => openModal(catIndex, itemIndex));
+                catDiv.appendChild(itemDiv);
+            });
+            
+            menuContainer.appendChild(catDiv);
+        });
+
+        // === МОДАЛЬНОЕ ОКНО ===
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalClose = document.getElementById('modal-close');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalPrice = document.getElementById('modal-price');
+        const modalImage = document.getElementById('modal-image');
+        const modalExtras = document.getElementById('modal-extras');
+        const modalExtrasList = document.getElementById('modal-extras-list');
+
+        function openModal(catIndex, itemIndex) {
+            const item = menuData[catIndex].items[itemIndex];
+            modalTitle.textContent = item.name;
+            modalDesc.textContent = item.desc;
+            modalPrice.textContent = `${item.price} лей`;
+            modalImage.style.backgroundImage = `url('${item.image}')`;
+            modalImage.style.backgroundSize = 'cover';
+            modalImage.style.backgroundPosition = 'center';
+
+            if (item.extras && item.extras.length > 0) {
+                modalExtras.style.display = 'block';
+                modalExtrasList.innerHTML = item.extras.map(e => 
+                    `<li><span>${e.name}</span><span>+${e.price} лей</span></li>`
+                ).join('');
+            } else {
+                modalExtras.style.display = 'none';
+            }
+
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // === ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ===
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+    </script>
+</body>
+</html>
